@@ -4,7 +4,7 @@ enum WeatherType {
     NOW = 'weather/now?',
     GATHER = '/weather?',
     AIR = '/air/now?'
-};
+}
 
 const WeatherIcon = {
     100: 'icon-tianqi-qing',
@@ -90,6 +90,6 @@ const Season = {
     10: 'winter',
     11: 'winter',
     12: 'winter'
-}
+};
 
-export {WeatherType, WeatherIcon, Season}
+export { WeatherType, WeatherIcon, Season };
