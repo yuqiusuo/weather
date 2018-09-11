@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import 'normalize.css'
+import './assets/less/common.less';
 
 // import { Seniverse } from './assets/js/util'
 // let sen = new Seniverse('hefei')
@@ -13,7 +14,8 @@ import 'normalize.css'
 //   console.log(err);
 // });
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+Vue.prototype.$axios = axios;
 
 new Vue({
     router,

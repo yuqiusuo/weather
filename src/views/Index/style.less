@@ -1,0 +1,135 @@
+.weather {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    color: #555555;
+    &.spring {
+        background: url('../../assets/img/spring.jpg') transparent top center no-repeat;
+        background-size: cover;
+    }
+    &.summer {
+        background: url('../../assets/img/summer.jpg') transparent top center no-repeat;
+        background-size: cover;
+    }
+    &.autumn {
+        background: url('../../assets/img/autumn.jpg') transparent top center no-repeat;
+        background-size: cover;
+    }
+    &.winter {
+        background: url('../../assets/img/winter.jpg') transparent top center no-repeat;
+        background-size: cover;
+    }
+    &.night {
+        background: url('../../assets/img/night.jpg') transparent top center no-repeat;
+        background-size: cover;
+    }
+    &.lethe {
+        background: url('../../assets/img/lethe.jpg') transparent top center no-repeat;
+        background-size: cover;
+    }
+}
+
+.lethe.weather {
+    .weather__pre {
+        color: #e8f214;
+        .iconfont {
+            color: #e8f214;
+        }
+    }
+    .location {
+        color: #e8f214;
+    }
+}
+
+.night.weather {
+    .iconfont {
+        color: #fff;
+    }
+    .weather__pre {
+        color: #fff;
+    }
+}
+
+.weather__info {
+    margin-top: 40px;
+    padding: 0 40px;
+    text-align: right;
+    line-height: 1.5;
+    .weather__icon {
+        font-size: 80px;
+        color: #3492ef;
+    }
+}
+
+.temperature {
+    font-size: 40px;
+    padding-right: 40px;
+    position: relative;
+}
+
+.air__quality {
+    font-size: 18px;
+}
+
+.weather__txt {
+    font-size: 18px;
+}
+
+.temperature--min {
+    font-size: 16px;
+    position: absolute;
+    top: 5px;
+    right: 0;
+}
+
+.temperature--max {
+    font-size: 16px;
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+}
+
+.weather__pre {
+    height: 100px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 20px;
+    overflow: hidden;
+}
+
+.weather__pre__item {
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.pre__weather__icon.iconfont {
+    font-size: 40px;
+    color: #3492ef;
+}
+
+.pre__weather__txt {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.location {
+    text-align: center;
+    position: absolute;
+    min-width: 100px;
+    bottom: 200px;
+    left: 20px;
+    color: #FF9700;
+}
+
+.location__icon {
+    font-size: 50px;
+    text-align: center;
+}
+
+.location__text {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 24px;
+}
