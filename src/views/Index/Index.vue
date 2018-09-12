@@ -30,10 +30,12 @@
                 </div>
             </div>
         </div>
-        <div class="location">
+        <div class="location" @click="showContArea(true)">
             <div class="location__icon iconfont icon-dingwei"></div>
             <div class="location__text">{{city}}</div>
         </div>
+		<cont-area :show="isShowContArea" @search="search"></cont-area>
+		<div class="cont-shadow" :class="{'hide': !isShowContArea}" @click="showContArea(false)"></div>
     </article>
 </template>
 
@@ -41,10 +43,16 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Seniverse } from '@/assets/js/util';
-import { WeatherIcon, Season } from '@/assets/js/contant.ts';
+import { WeatherIcon, Season, ErrorMsg } from '@/assets/js/contant.ts';
+import contArea from './contArea.vue';
 
-@Component
+@Component({
+	components: {
+		contArea
+	}
+})
 export default class Index extends Vue {
+	preCity: string = '合肥'; // 预选城市
 	city: string = '合肥'; // 默认城市
 	code: string = '999'; // 默认icon代码
 	temperature: string = '----'; // 默认温度
@@ -56,11 +64,12 @@ export default class Index extends Vue {
 	tomorrow: object = {}; // 明天天气对象
 	tomorrowWeatherIcon: string = 'icon-unknow'; // 明天天气图标
 	acquired: object = {}; // 后天天气对象
-    acquiredWeatherIcon: string = 'icon-unknow'; // 后天天气图标
-    timeCls: string = 'lethe';
+	acquiredWeatherIcon: string = 'icon-unknow'; // 后天天气图标
+	timeCls: string = 'lethe'; // 时间校验
+	isShowContArea: boolean = false; // 控制修改地区是否显示
 
 	created() {
-        this.calTime();
+		this.calTime();
 		this.getWeatherInfo();
 		this.getAirInfo();
 	}
@@ -69,23 +78,29 @@ export default class Index extends Vue {
 	calTime() {
 		let date = new Date(),
 			month = date.getMonth() + 1,
-            hour = date.getHours();
+			hour = date.getHours();
 		if (!(hour >= 6 && hour <= 18)) {
-            this.timeCls = 'night';
-            return;
-        }
+			this.timeCls = 'night';
+			return;
+		}
 
-        this.timeCls = (Season as any)[month];
+		this.timeCls = (Season as any)[month];
 	}
 
 	// 获取天气信息
 	getWeatherInfo() {
-		let sen = new Seniverse(this.city);
+		let sen = new Seniverse(this.preCity);
 		sen
 			.getGatherWeather()
 			.then(re => {
-				console.log('天气', re);
-				let result = (re as any)['HeWeather6'];
+				console.log(re);
+				let errAng = ErrorMsg as any,
+					reAny = re as any;
+				if (errAng[reAny["HeWeather6"][0].status]) {
+					alert(errAng[reAny['HeWeather6'][0].status]);
+					return;
+				}
+				let result = reAny['HeWeather6'];
 				this.getWeatherInfoSc(result);
 			})
 			.catch(err => {
@@ -113,6 +128,7 @@ export default class Index extends Vue {
 		let info = result[0].now,
 			infoTody = result[0].daily_forecast[0],
 			WeatherIconAny = WeatherIcon as any;
+		this.city = result[0].basic.parent_city;
 		this.code = info.cond_code;
 		this.weatherIcon = WeatherIconAny[info.cond_code];
 		this.temperature = info.tmp;
@@ -130,6 +146,18 @@ export default class Index extends Vue {
 	// 获取空气质量回调
 	getAirInfoSc(result: any) {
 		this.airQuality = result.qlty;
+	}
+
+	// 修改地址弹框是否显示
+	showContArea(v: boolean) {
+		this.isShowContArea = v;
+	}
+
+	// 搜索回调
+	search(city: string) {
+		this.preCity = city;
+		this.getWeatherInfo();
+		this.getAirInfo();
 	}
 }
 </script>
